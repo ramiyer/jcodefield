@@ -6,9 +6,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-/**
- * @author ram
- */
 public class LRUCache<K,V>
 {
 
@@ -24,9 +21,8 @@ public class LRUCache<K,V>
     }
 
     public void add(K key, V value) {
-
+        writeLock.lock();
         try {
-            writeLock.lock();
             if(concurrentHashMap.contains(key)){
                 concurrentLinkedQueue.remove(key);
             }
@@ -45,6 +41,17 @@ public class LRUCache<K,V>
     }
 
     public V get(K key) {
-        return concurrentHashMap.get(key);
+        readLock.lock();
+        try {
+            V value = null;
+            if (concurrentHashMap.contains(key)) {
+                concurrentLinkedQueue.remove(key);
+                value = concurrentHashMap.get(key);
+                concurrentLinkedQueue.add(key);
+            }
+            return value;
+        } finally {
+            readLock.unlock();
+        }
     }
 }
