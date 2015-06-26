@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+  testCompile 'org.testng:testng:6.1.1'
+
+  //utils
+  compile 'io.reactivex:rxjava:1.0.0'
+  compile 'com.google.guava:guava:18.0'
+  compile 'org.reactivestreams:reactive-streams:1.0.0.final'
+  compile 'com.google.inject:guice:4.0'
+
+  //jdbc
+  compile 'org.jdbi:jdbi:2.62'
+  compile 'commons-dbcp:commons-dbcp:1.4'
+  compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
+  compile 'org.xerial:sqlite-jdbc:3.8.10.1'
+}
